@@ -24,61 +24,100 @@ fun RecipeDetail(
     recipe: Recipe?,
     loading: Boolean
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-
-        if(!loading) {
-            recipe?.featuredImage?.let {
-                url -> Image(
-                    painter = rememberImagePainter(
-                        data = recipe?.featuredImage,
-                        builder = {
-                            crossfade(true)
-                            placeholder(R.drawable.empty_plate)
-                        }
-                    ),
-                    contentDescription = " ",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(260.dp),
-                    contentScale = ContentScale.Crop
-                )
-            }
-
-            recipe?.title?.let { title ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            bottom = 12.dp,
-                            start = 8.dp,
-                            end = 8.dp
-                        )
-                ) {
-                    Text(
-                        text = title,
+    Box(modifier = Modifier
+        .fillMaxWidth()) {
+        LazyColumn {
+            items(1) {
+                if(!loading) {
+                    recipe?.featuredImage?.let {
+                            url -> Image(
+                        painter = rememberImagePainter(
+                            data = recipe?.featuredImage,
+                            builder = {
+                                crossfade(true)
+                                placeholder(R.drawable.empty_plate)
+                            }
+                        ),
+                        contentDescription = " ",
                         modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.h6,
+                            .fillMaxWidth()
+                            .height(260.dp),
+                        contentScale = ContentScale.Crop
                     )
+                    }
+
+                    recipe?.title?.let { title ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        ) {
+                            Text(
+                                text = title,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .wrapContentWidth(Alignment.Start),
+                                style = MaterialTheme.typography.h4,
+                            )
+                            val rank = recipe.rating.toString()
+                            Text(
+                                text = rank,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.End)
+                                    .align(Alignment.CenterVertically),
+                                style= MaterialTheme.typography.h5
+                            )
+                        }
+                    }
+
+                    recipe?.publisher?.let { publisher ->
+                        val updated = recipe.dateUpdated
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        ) {
+                            Text(
+                                text = if(updated != null) {
+                                    "Updated $updated by $publisher"
+                                } else {
+                                    "Updated by $publisher"
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                style = MaterialTheme.typography.caption,
+                            )
+                        }
+                    }
+
+                    for(ingredient in recipe?.ingredients!!) {
+                        Text(
+                            text = ingredient,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
+
+
+
+                } else {
+
+                    ShimmerRecipeDetailItem(
+                        colors = listOf(
+                            Color.LightGray.copy(alpha = 0.9f),
+                            Color.LightGray.copy(alpha = 0.2f),
+                            Color.LightGray.copy(alpha = 0.9f)
+                        ),
+                        cardHeight = 250.dp
+                    )
+
                 }
             }
-
-        } else {
-
-            ShimmerRecipeCardItem(
-                colors = listOf(
-                    Color.LightGray.copy(alpha = 0.9f),
-                    Color.LightGray.copy(alpha = 0.2f),
-                    Color.LightGray.copy(alpha = 0.9f)
-                ),
-                cardHeight = 250.dp
-            )
-
         }
-
     }
+
 }

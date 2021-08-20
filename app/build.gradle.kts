@@ -90,5 +90,4 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:1.3.0")
 
-
 }

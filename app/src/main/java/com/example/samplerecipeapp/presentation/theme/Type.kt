@@ -34,22 +34,22 @@ var QuickSandTypography = Typography(
     h3 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.W500,
-        fontSize = 20.sp
+        fontSize = 16.sp
     ),
     h4 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.W400,
-        fontSize = 18.sp
+        fontSize = 14.sp
     ),
     h5 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.W400,
-        fontSize = 16.sp
+        fontSize = 13.sp
     ),
     h6 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.W400,
-        fontSize = 14.sp
+        fontSize = 12.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = QuickSand,
